@@ -4,137 +4,241 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    title: "앤딩스터디카페 상도점",
-    subtitle: "조용하고 쾌적한 학습공간",
-    desc: "오늘도 집중하기 좋은 하루 되세요.",
-  },
-  {
-    title: "휴게실 이용 안내",
-    subtitle: "통화와 대화는 짧고 조용하게 부탁드립니다.",
-    desc: "소리가 스터디존으로 유입될 수 있습니다.",
-  },
-  {
-    title: "스터디룸 이용 안내",
-    subtitle: "퇴실 전 자리 정리와 소등을 확인해 주세요.",
-    desc: "다음 이용자를 위한 배려입니다.",
+    title: <>대화 및 통화는<br />밖에서 부탁드립니다.</>,
+    items: [
+      "내부로 소리가 유입됩니다.",
+      <> <b>3인 이상</b> 대화는 특히 주의해 주세요.</>,
+      <>안내 후에도 동일한 상황이 반복될 경우<br /><b className="gold">이용이 제한</b>될 수 있습니다.</>,
+    ],
   },
 ];
 
 export default function Home() {
-  const [index, setIndex] = useState(0);
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    const slideTimer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, 10000);
-
     const clockTimer = setInterval(() => {
-      const now = new Date();
       setTime(
-        now.toLocaleTimeString("ko-KR", {
+        new Date().toLocaleTimeString("ko-KR", {
           hour: "2-digit",
           minute: "2-digit",
         })
       );
     }, 1000);
 
-    return () => {
-      clearInterval(slideTimer);
-      clearInterval(clockTimer);
-    };
+    return () => clearInterval(clockTimer);
   }, []);
 
-  const slide = slides[index];
+  const slide = slides[0];
 
   return (
-    <main
-      style={{
-        width: "100vw",
-        height: "100vh",
-        background: "linear-gradient(135deg, #f7f4ee, #e8dfd1)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontFamily:
-          "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-        overflow: "hidden",
-      }}
-    >
-      <section
-        style={{
-          width: "82vw",
-          height: "72vh",
-          background: "rgba(255,255,255,0.86)",
-          borderRadius: "42px",
-          boxShadow: "0 30px 80px rgba(0,0,0,0.13)",
-          padding: "64px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "34px",
-            fontWeight: 700,
-            color: "#8a7459",
-            letterSpacing: "0.08em",
-          }}
-        >
-          ANDING STUDY CAFE
+    <main className="screen">
+      <section className="card">
+        <div className="brand">
+          <div className="logo">▯</div>
+          <div>
+            <div className="brandMain">AND-ING</div>
+            <div className="brandSub">STUDY CAFE</div>
+          </div>
         </div>
 
-        <div>
-          <h1
-            style={{
-              fontSize: "76px",
-              margin: "0 0 30px",
-              color: "#2f2a24",
-              fontWeight: 800,
-            }}
-          >
-            {slide.title}
-          </h1>
+        <h1>{slide.title}</h1>
 
-          <h2
-            style={{
-              fontSize: "44px",
-              margin: "0 0 26px",
-              color: "#5a4c3f",
-              fontWeight: 700,
-            }}
-          >
-            {slide.subtitle}
-          </h2>
-
-          <p
-            style={{
-              fontSize: "30px",
-              margin: 0,
-              color: "#7a6b5b",
-              lineHeight: 1.5,
-            }}
-          >
-            {slide.desc}
-          </p>
+        <div className="divider">
+          <span />
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: "26px",
-            color: "#8a7459",
-            fontWeight: 600,
-          }}
-        >
-          <span>앤딩스터디카페 상도점</span>
-          <span>{time}</span>
+        <div className="noticeList">
+          <Notice icon="🔊">{slide.items[0]}</Notice>
+          <Notice icon="👥">{slide.items[1]}</Notice>
+          <Notice icon="⚠️">{slide.items[2]}</Notice>
         </div>
+
+        <div className="watermark">▯</div>
       </section>
+
+      <footer>
+        <span>앤딩스터디카페 상도점</span>
+        <span className="slogan">QUIET SPACE,  BETTER FOCUS</span>
+        <span>{time}</span>
+      </footer>
+
+      <style jsx>{`
+        .screen {
+          width: 100vw;
+          height: 100vh;
+          background:
+            radial-gradient(circle at center, #154534 0%, #062b22 70%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+          overflow: hidden;
+          color: #111;
+        }
+
+        .card {
+          position: relative;
+          width: 92vw;
+          height: 82vh;
+          background: #fffaf0;
+          border-radius: 34px;
+          border: 4px solid #b38a42;
+          box-shadow: inset 0 0 0 3px #123b2f, 0 24px 60px rgba(0,0,0,0.32);
+          padding: 38px 80px 54px;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+
+        .brand {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 18px;
+          color: #a6782f;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+        }
+
+        .logo {
+          font-size: 54px;
+          transform: rotate(45deg);
+          line-height: 1;
+        }
+
+        .brandMain {
+          font-size: 31px;
+          line-height: 1;
+        }
+
+        .brandSub {
+          font-size: 20px;
+          margin-top: 6px;
+        }
+
+        h1 {
+          margin: 32px 0 20px;
+          text-align: center;
+          font-size: 78px;
+          line-height: 1.28;
+          font-weight: 950;
+          color: #063426;
+          letter-spacing: -0.04em;
+        }
+
+        .divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 10px auto 28px;
+          width: 84%;
+          height: 1px;
+          background: #b58a43;
+        }
+
+        .divider span {
+          width: 15px;
+          height: 15px;
+          background: #b58a43;
+          border-radius: 50%;
+          box-shadow: 0 0 0 14px #fffaf0;
+        }
+
+        .noticeList {
+          width: 82%;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .row {
+          display: grid;
+          grid-template-columns: 88px 28px 1fr;
+          align-items: center;
+          gap: 24px;
+          padding: 22px 0;
+          border-bottom: 1px solid rgba(0,0,0,0.13);
+          font-size: 38px;
+          font-weight: 700;
+          letter-spacing: -0.04em;
+          line-height: 1.35;
+        }
+
+        .row:last-child {
+          border-bottom: none;
+        }
+
+        .icon {
+          width: 76px;
+          height: 76px;
+          border-radius: 50%;
+          background: #063426;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 38px;
+        }
+
+        .bar {
+          width: 2px;
+          height: 42px;
+          background: #b58a43;
+        }
+
+        b {
+          color: #063426;
+          font-size: 1.08em;
+        }
+
+        .gold {
+          color: #b17a18;
+        }
+
+        .watermark {
+          position: absolute;
+          right: 80px;
+          bottom: 90px;
+          font-size: 260px;
+          color: rgba(166, 125, 57, 0.08);
+          transform: rotate(45deg);
+          pointer-events: none;
+        }
+
+        footer {
+          width: 92vw;
+          margin-top: 22px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: #d6a85a;
+          font-size: 28px;
+          font-weight: 700;
+        }
+
+        .slogan {
+          font-size: 18px;
+          letter-spacing: 0.45em;
+          font-weight: 600;
+        }
+      `}</style>
     </main>
+  );
+}
+
+function Notice({
+  icon,
+  children,
+}: {
+  icon: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="row">
+      <div className="icon">{icon}</div>
+      <div className="bar" />
+      <div>{children}</div>
+    </div>
   );
 }
