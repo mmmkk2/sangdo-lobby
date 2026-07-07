@@ -188,44 +188,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
   color: #a6782f;
-  font-size: 40px;      /* 글씨 크기 */
+  font-size: 35px;      /* 글씨 크기 */
   font-weight: 800;     /* 굵기 */
   letter-spacing: 0.18em; /* 글자 간격 */
-  margin-bottom: 12px;  /* 제목과의 간격 */
+  margin-bottom: 5px;  /* 제목과의 간격 */
   flex-shrink: 0;
 }
 
-
-
-.brandIcon {
-  width: 34px;
-  height: 34px;
-  border: 4px solid #a6782f;
-  transform: rotate(45deg);
-  box-sizing: border-box;
-  flex-shrink: 0;
-}
-
-.brandText {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.brandMain {
-  font-size: 32px;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.brandSub {
-  font-size: 20px;
-  margin-top: 7px;
-  line-height: 1;
-  white-space: nowrap;
-}
 
 .card {
   position: relative;
