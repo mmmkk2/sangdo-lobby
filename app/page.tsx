@@ -88,11 +88,7 @@ export default function Home() {
     <main className="screen">
       <section className="card">
         <div className="brand">
-          <div className="brandIcon" />
-          <div className="brandText">
-            <div className="brandMain">AND-ING</div>
-            <div className="brandSub">STUDY CAFE</div>
-          </div>
+          ANDING STUDY CAFE
         </div>
 
         <h1>{slide.title}</h1>
