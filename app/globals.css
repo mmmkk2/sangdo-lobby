@@ -193,7 +193,7 @@ body {
   font-size: 40px;      /* 글씨 크기 */
   font-weight: 800;     /* 굵기 */
   letter-spacing: 0.18em; /* 글자 간격 */
-  margin-bottom: 32px;  /* 제목과의 간격 */
+  margin-bottom: 12px;  /* 제목과의 간격 */
   flex-shrink: 0;
 }
 
