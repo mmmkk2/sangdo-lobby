@@ -19,6 +19,7 @@ const defaultSlides: Slide[] = [
   {
     title: "카페테리아 이용 안내",
     subtitle: "대화 및 통화는 밖에서 부탁드립니다.",
+    duration: 10000,
     items: [
       { icon: "🔊", text: "내부로 소리가 유입됩니다." },
       {
@@ -28,7 +29,7 @@ const defaultSlides: Slide[] = [
       },
       {
         icon: "⚠️",
-        text: "안내 후에도 동일한 상황이 반복될 경우 이용이 제한될 수 있습니다.",
+        text: "안내 후에도 동일한 상황이 반복될 경우\n이용이 제한될 수 있습니다.",
         highlight: "이용이 제한",
       },
     ],
@@ -41,19 +42,24 @@ export default function Home() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    if (slides.length <= 1) return;
-  
-    const duration = slides[index]?.duration ?? 10000;
-  
-    const slideTimer = setTimeout(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, duration);
-  
-    return () => clearTimeout(slideTimer);
-  }, [index, slides]);
+    const loadNotices = async () => {
+      try {
+        const res = await fetch(`/images/notices.json?t=${Date.now()}`);
+        if (!res.ok) return;
+
+        const data: Slide[] = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setSlides(data);
+          setIndex(0);
+        }
+      } catch {
+        // JSON 못 읽어도 기본 화면 유지
+      }
+    };
 
     loadNotices();
     const reloadTimer = setInterval(loadNotices, 60000);
+
     return () => clearInterval(reloadTimer);
   }, []);
 
@@ -69,27 +75,28 @@ export default function Home() {
 
     clock();
     const clockTimer = setInterval(clock, 1000);
+
     return () => clearInterval(clockTimer);
   }, []);
 
   useEffect(() => {
     if (slides.length <= 1) return;
 
-    const slideTimer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, 10000);
+    const duration = slides[index]?.duration ?? 10000;
 
-    return () => clearInterval(slideTimer);
-  }, [slides.length]);
+    const slideTimer = setTimeout(() => {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, duration);
+
+    return () => clearTimeout(slideTimer);
+  }, [index, slides]);
 
   const slide = slides[index] ?? defaultSlides[0];
 
   return (
     <main className="screen">
       <section className="card">
-        <div className="brand">
-          ANDING STUDY CAFE
-        </div>
+        <div className="brand">ANDING STUDY CAFE</div>
 
         <h1>{slide.title}</h1>
         <h2>{slide.subtitle}</h2>
@@ -117,19 +124,17 @@ export default function Home() {
 }
 
 function Notice({ item }: { item: NoticeItem }) {
-  const text = item.text;
-
-  if (!item.highlight || !text.includes(item.highlight)) {
+  if (!item.highlight || !item.text.includes(item.highlight)) {
     return (
       <div className="row">
         <div className="icon">{item.icon}</div>
         <div className="bar" />
-        <div>{text}</div>
+        <div>{item.text}</div>
       </div>
     );
   }
 
-  const parts = text.split(item.highlight);
+  const parts = item.text.split(item.highlight);
 
   return (
     <div className="row">
