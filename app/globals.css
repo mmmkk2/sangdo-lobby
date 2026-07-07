@@ -161,3 +161,183 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.screen {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #154534 0%, #062b22 72%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  overflow: hidden;
+  color: #111;
+}
+
+.card {
+  position: relative;
+  width: 92vw;
+  height: 82vh;
+  background: #fffaf0;
+  border-radius: 34px;
+  border: 4px solid #b38a42;
+  box-shadow: inset 0 0 0 3px #123b2f, 0 24px 60px rgba(0, 0, 0, 0.32);
+  padding: 38px 80px 46px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  color: #a6782f;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.logoMark {
+  width: 34px;
+  height: 34px;
+  border: 4px solid #a6782f;
+  transform: rotate(45deg);
+  box-sizing: border-box;
+}
+
+.brandMain {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.brandSub {
+  font-size: 20px;
+  margin-top: 7px;
+}
+
+h1 {
+  margin: 46px 0 10px;
+  text-align: center;
+  font-size: 76px;
+  line-height: 1.05;
+  font-weight: 950;
+  color: #063426;
+  letter-spacing: -0.06em;
+}
+
+h2 {
+  margin: 0 0 30px;
+  text-align: center;
+  font-size: 42px;
+  line-height: 1.18;
+  font-weight: 900;
+  color: #063426;
+  letter-spacing: -0.055em;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 34px;
+  width: 74%;
+  height: 1px;
+  background: #b58a43;
+}
+
+.divider span {
+  width: 14px;
+  height: 14px;
+  background: #b58a43;
+  border-radius: 50%;
+  box-shadow: 0 0 0 14px #fffaf0;
+}
+
+.noticeList {
+  width: 84%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 96px 28px 1fr;
+  align-items: center;
+  gap: 26px;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.34;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: #063426;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+}
+
+.bar {
+  width: 2px;
+  height: 46px;
+  background: #b58a43;
+}
+
+b {
+  color: #063426;
+  font-size: 1.08em;
+  font-weight: 950;
+}
+
+.gold {
+  color: #b17a18;
+}
+
+.watermark {
+  position: absolute;
+  right: 82px;
+  bottom: 118px;
+  width: 180px;
+  height: 180px;
+  border: 22px solid rgba(166, 125, 57, 0.07);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+footer {
+  width: 92vw;
+  margin-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #d6a85a;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.slogan {
+  font-size: 17px;
+  letter-spacing: 0.4em;
+  font-weight: 700;
+}
