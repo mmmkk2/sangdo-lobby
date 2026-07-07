@@ -296,3 +296,7 @@ footer {
   letter-spacing: 0.4em;
   font-weight: 700;
 }
+
+.row div:last-child {
+  white-space: pre-line;
+}
