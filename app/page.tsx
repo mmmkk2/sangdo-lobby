@@ -42,7 +42,7 @@ export default function Home() {
   useEffect(() => {
     const loadNotices = async () => {
       try {
-        const res = await fetch(`/notices.json?t=${Date.now()}`);
+        const res = await fetch(`/images/notices.json?t=${Date.now()}`);
         if (!res.ok) return;
 
         const data: Slide[] = await res.json();
