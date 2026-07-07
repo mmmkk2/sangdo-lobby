@@ -11,6 +11,7 @@ type NoticeItem = {
 type Slide = {
   title: string;
   subtitle: string;
+  duration?: number;
   items: NoticeItem[];
 };
 
@@ -40,20 +41,16 @@ export default function Home() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    const loadNotices = async () => {
-      try {
-        const res = await fetch(`/images/notices.json?t=${Date.now()}`);
-        if (!res.ok) return;
-
-        const data: Slide[] = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setSlides(data);
-          setIndex(0);
-        }
-      } catch {
-        // notices.json이 없어도 기본 화면 유지
-      }
-    };
+    if (slides.length <= 1) return;
+  
+    const duration = slides[index]?.duration ?? 10000;
+  
+    const slideTimer = setTimeout(() => {
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, duration);
+  
+    return () => clearTimeout(slideTimer);
+  }, [index, slides]);
 
     loadNotices();
     const reloadTimer = setInterval(loadNotices, 60000);
