@@ -117,10 +117,13 @@ export default function Home() {
 
         if (slidesToShow.length > 0) {
           console.log('[Notices] Loaded slides:', slidesToShow.length, 'allowPerm:', allowPermanent, 'allowTemp:', allowTemporary);
-          setSlides(slidesToShow);
-          if (!slidesLoaded) {
-            setIndex(0);
-            setSlidesLoaded(true);
+          // slides 배열이 실제로 변경된 경우에만 setSlides 호출 (타이머 리셋 방지)
+          if (JSON.stringify(slides) !== JSON.stringify(slidesToShow)) {
+            setSlides(slidesToShow);
+            if (!slidesLoaded) {
+              setIndex(0);
+              setSlidesLoaded(true);
+            }
           }
         } else {
           console.log('[Notices] No slides loaded. tempData:', tempData.length, 'permData:', permData.length);
@@ -134,7 +137,7 @@ export default function Home() {
     const reloadTimer = setInterval(loadNotices, 5000);
 
     return () => clearInterval(reloadTimer);
-  }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl, slidesLoaded]);
+  }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl, slides, slidesLoaded]);
 
   useEffect(() => {
     const clock = () => {
