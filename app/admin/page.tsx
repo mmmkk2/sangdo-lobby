@@ -8,12 +8,18 @@ export default function AdminPage() {
   const [file2, setFile2] = useState<File | null>(null);
   const [message, setMessage] = useState("");
   const [violatingStudents, setViolatingStudents] = useState("");
+  const [allowPermanent, setAllowPermanent] = useState(true);
+  const [allowTemporary, setAllowTemporary] = useState(true);
   const [settingsMessage, setSettingsMessage] = useState("");
 
   useEffect(() => {
     fetch(`/api/config?t=${Date.now()}`)
       .then((res) => res.json())
-      .then((config) => setViolatingStudents(config.violatingStudents ?? ""))
+      .then((config) => {
+        setViolatingStudents(config.violatingStudents ?? "");
+        setAllowPermanent(config.allowPermanent ?? true);
+        setAllowTemporary(config.allowTemporary ?? true);
+      })
       .catch(() => {});
   }, []);
 
@@ -26,7 +32,7 @@ export default function AdminPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ violatingStudents }),
+        body: JSON.stringify({ violatingStudents, allowPermanent, allowTemporary }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -111,6 +117,24 @@ export default function AdminPage() {
         placeholder="학생1, 학생2, 학생3"
         style={{ width: 400 }}
       />
+
+      <h2>공지 표시 여부</h2>
+      <label style={{ display: 'block', marginBottom: 8 }}>
+        <input
+          type="checkbox"
+          checked={allowPermanent}
+          onChange={(e) => setAllowPermanent(e.target.checked)}
+        />
+        {' '}상시 공지 (permanent) 표시
+      </label>
+      <label style={{ display: 'block' }}>
+        <input
+          type="checkbox"
+          checked={allowTemporary}
+          onChange={(e) => setAllowTemporary(e.target.checked)}
+        />
+        {' '}임시 공지 (temporary) 표시
+      </label>
 
       <div style={{ marginTop: 12 }}>
         <button onClick={saveSettings}>설정 저장</button>
