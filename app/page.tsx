@@ -44,6 +44,8 @@ export default function Home() {
   const [time, setTime] = useState("");
   const [allowPermanent, setAllowPermanent] = useState<boolean>(true);
   const [allowTemporary, setAllowTemporary] = useState<boolean>(true);
+  const [noticesUrl, setNoticesUrl] = useState<string>("/images/notices.json");
+  const [noticesTempUrl, setNoticesTempUrl] = useState<string>("/images/notices_temp.json");
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -54,6 +56,8 @@ export default function Home() {
         const config = await res.json();
         setAllowPermanent(config.allowPermanent ?? true);
         setAllowTemporary(config.allowTemporary ?? true);
+        setNoticesUrl(config.noticesUrl ?? "/images/notices.json");
+        setNoticesTempUrl(config.noticesTempUrl ?? "/images/notices_temp.json");
       } catch {
         setAllowPermanent(true);
         setAllowTemporary(true);
@@ -71,7 +75,7 @@ export default function Home() {
         // allowTemporary가 true이면 notices_temp.json 먼저 로드
         if (allowTemporary) {
           try {
-            const tempRes = await fetch(`/images/notices_temp.json?t=${Date.now()}`);
+            const tempRes = await fetch(`${noticesTempUrl}?t=${Date.now()}`);
             if (tempRes.ok) {
               const tempData: Slide[] = await tempRes.json();
               if (Array.isArray(tempData) && tempData.length > 0) {
@@ -85,7 +89,7 @@ export default function Home() {
 
         // temp 공지가 없거나 allowTemporary가 false일 때 permanent 공지 로드
         if (slidesToShow.length === 0 && allowPermanent) {
-          const res = await fetch(`/images/notices.json?t=${Date.now()}`);
+          const res = await fetch(`${noticesUrl}?t=${Date.now()}`);
           if (!res.ok) return;
 
           const data: Slide[] = await res.json();
