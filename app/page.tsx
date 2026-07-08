@@ -70,35 +70,46 @@ export default function Home() {
   useEffect(() => {
     const loadNotices = async () => {
       try {
-        let slidesToShow: Slide[] = [];
+        let tempData: Slide[] = [];
+        let permData: Slide[] = [];
 
-        // allowTemporary가 true이면 notices_temp.json 먼저 로드
+        // 임시 공지를 허용하면 temp 파일 시도 로드
         if (allowTemporary) {
           try {
             const tempRes = await fetch(`${noticesTempUrl}?t=${Date.now()}`);
             if (tempRes.ok) {
-              const tempData: Slide[] = await tempRes.json();
-              if (Array.isArray(tempData) && tempData.length > 0) {
-                slidesToShow = tempData;
-              }
+              const d: Slide[] = await tempRes.json();
+              if (Array.isArray(d) && d.length > 0) tempData = d;
             }
           } catch {
-            // temp 파일이 없으면 무시
+            // 무시
           }
         }
 
-        // temp 공지가 없거나 allowTemporary가 false일 때 permanent 공지 로드
-        if (slidesToShow.length === 0 && allowPermanent) {
-          const res = await fetch(`${noticesUrl}?t=${Date.now()}`);
-          if (!res.ok) return;
-
-          const data: Slide[] = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            slidesToShow = data.filter((slide) => slide.type === "permanent");
-            if (slidesToShow.length === 0) {
-              slidesToShow = data;
+        // 상시 공지를 허용하면 permanent 파일 로드
+        if (allowPermanent) {
+          try {
+            const res = await fetch(`${noticesUrl}?t=${Date.now()}`);
+            if (res.ok) {
+              const d: Slide[] = await res.json();
+              if (Array.isArray(d) && d.length > 0) {
+                permData = d.filter((slide) => slide.type === "permanent");
+                if (permData.length === 0) permData = d;
+              }
             }
+          } catch {
+            // 무시
           }
+        }
+
+        // 둘 다 허용되어 있고 둘 다 존재하면 temp 먼저, perm 이어서 함께 표시
+        let slidesToShow: Slide[] = [];
+        if (tempData.length > 0 && permData.length > 0) {
+          slidesToShow = [...tempData, ...permData];
+        } else if (tempData.length > 0) {
+          slidesToShow = tempData;
+        } else if (permData.length > 0) {
+          slidesToShow = permData;
         }
 
         if (slidesToShow.length > 0) {
@@ -114,7 +125,7 @@ export default function Home() {
     const reloadTimer = setInterval(loadNotices, 60000);
 
     return () => clearInterval(reloadTimer);
-  }, [allowPermanent, allowTemporary]);
+  }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl]);
 
   useEffect(() => {
     const clock = () => {
