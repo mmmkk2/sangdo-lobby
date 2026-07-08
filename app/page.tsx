@@ -65,7 +65,7 @@ export default function Home() {
     };
 
     loadConfig();
-    const configTimer = setInterval(loadConfig, 60000);
+    const configTimer = setInterval(loadConfig, 5000);
     return () => clearInterval(configTimer);
   }, []);
 
@@ -124,7 +124,7 @@ export default function Home() {
     };
 
     loadNotices();
-    const reloadTimer = setInterval(loadNotices, 60000);
+    const reloadTimer = setInterval(loadNotices, 5000);
 
     return () => clearInterval(reloadTimer);
   }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl]);
