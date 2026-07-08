@@ -1,5 +1,5 @@
 {
-  "allowPermanent": false,
+  "allowPermanent": true,
   "allowTemporary": true,
   "noticesUrl": "/images/notices.json",
   "noticesTempUrl": "/images/notices_temp.json"
