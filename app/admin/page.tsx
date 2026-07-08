@@ -1,12 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AdminPage() {
   const [token, setToken] = useState("");
   const [file1, setFile1] = useState<File | null>(null);
   const [file2, setFile2] = useState<File | null>(null);
   const [message, setMessage] = useState("");
+  const [violatingStudents, setViolatingStudents] = useState("");
+  const [settingsMessage, setSettingsMessage] = useState("");
+
+  useEffect(() => {
+    fetch(`/api/config?t=${Date.now()}`)
+      .then((res) => res.json())
+      .then((config) => setViolatingStudents(config.violatingStudents ?? ""))
+      .catch(() => {});
+  }, []);
+
+  async function saveSettings() {
+    setSettingsMessage("저장 중...");
+    try {
+      const res = await fetch("/api/config", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ violatingStudents }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setSettingsMessage(`저장 실패: ${data.error || "unknown"}`);
+        return;
+      }
+      setSettingsMessage("저장 완료.");
+    } catch (err: any) {
+      setSettingsMessage(`저장 실패: ${err.message || String(err)}`);
+    }
+  }
 
   async function upload(file: File, key: string) {
     setMessage(`Requesting upload URL for ${key}...`);
@@ -68,6 +99,24 @@ export default function AdminPage() {
       </div>
 
       <div style={{ marginTop: 12, color: 'green' }}>{message}</div>
+
+      <hr style={{ margin: '32px 0' }} />
+
+      <h1>설정 (Settings)</h1>
+      <h2>규칙 위반 학생 명단</h2>
+      <p>임시 경고 슬라이드 부제목에 표시됩니다.</p>
+      <input
+        value={violatingStudents}
+        onChange={(e) => setViolatingStudents(e.target.value)}
+        placeholder="학생1, 학생2, 학생3"
+        style={{ width: 400 }}
+      />
+
+      <div style={{ marginTop: 12 }}>
+        <button onClick={saveSettings}>설정 저장</button>
+      </div>
+
+      <div style={{ marginTop: 12, color: 'green' }}>{settingsMessage}</div>
     </div>
   );
 }

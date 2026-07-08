@@ -47,18 +47,20 @@ export default function Home() {
   const [noticesUrl, setNoticesUrl] = useState<string>("/images/notices.json");
   const [noticesTempUrl, setNoticesTempUrl] = useState<string>("/images/notices_temp.json");
   const [slidesLoaded, setSlidesLoaded] = useState(false);
+  const [violatingStudents, setViolatingStudents] = useState<string>("");
 
   useEffect(() => {
     const loadConfig = async () => {
       try {
-        const res = await fetch(`/images/config.json?t=${Date.now()}`);
+        const res = await fetch(`/api/config?t=${Date.now()}`);
         if (!res.ok) return;
-        
+
         const config = await res.json();
         setAllowPermanent(config.allowPermanent ?? true);
         setAllowTemporary(config.allowTemporary ?? true);
         setNoticesUrl(config.noticesUrl ?? "/images/notices.json");
         setNoticesTempUrl(config.noticesTempUrl ?? "/images/notices_temp.json");
+        setViolatingStudents(config.violatingStudents ?? "");
       } catch {
         setAllowPermanent(true);
         setAllowTemporary(true);
@@ -168,6 +170,10 @@ export default function Home() {
   }, [index, slides]);
 
   const slide = slides[index] ?? defaultSlides[0];
+  const subtitle =
+    slide.type === "temporary" && violatingStudents
+      ? violatingStudents
+      : slide.subtitle;
 
   return (
     <main className="screen">
@@ -175,7 +181,7 @@ export default function Home() {
         <div className="brand">ANDING STUDY CAFE</div>
 
         <h1>{slide.title}</h1>
-        <h2>{slide.subtitle}</h2>
+        <h2>{subtitle}</h2>
 
         <div className="divider">
           <span />
