@@ -69,7 +69,7 @@ export default function AdminPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token.trim()}`,
         },
         body: JSON.stringify({ violatingStudents, allowPermanent, allowTemporary }),
       });

@@ -57,9 +57,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'POST') {
     const auth = req.headers.authorization || ''
-    const token = auth.replace(/^Bearer\s+/i, '')
-    if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) {
-      return res.status(401).json({ error: 'Unauthorized' })
+    const token = auth.replace(/^Bearer\s+/i, '').trim()
+    const expected = (process.env.ADMIN_TOKEN || '').trim()
+    if (!expected) {
+      return res.status(500).json({ error: 'ADMIN_TOKEN is not set on the server (check Vercel env vars + redeploy)' })
+    }
+    if (token !== expected) {
+      return res.status(401).json({ error: 'Unauthorized (token mismatch)' })
     }
 
     const s3 = s3Client()
