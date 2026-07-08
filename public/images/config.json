@@ -1,7 +1,7 @@
 {
-  "allowPermanent": true,
-  "allowTemporary": false,
+  "allowPermanent": false,
+  "allowTemporary": true,
   "noticesUrl": "/images/notices.json",
   "noticesTempUrl": "/images/notices_temp.json",
-  "violatingStudents": "학생1, 학생2, 학생3"
+  "violatingStudents": "학생1test, 학생2, 학생3"
 }
