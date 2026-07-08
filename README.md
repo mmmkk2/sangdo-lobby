@@ -30,3 +30,11 @@ aws s3 cp notices_temp.json s3://your-bucket/notices_temp.json --acl public-read
 Notes:
 - If you prefer immediate push updates, consider adding a small admin page that uploads new JSON to S3 via signed requests.
 - For restricted upload, use presigned PUT URLs or an authenticated admin service.
+
+Added admin upload (presigned PUT) instructions and example endpoint in `pages/api/presign.ts`.
+
+Serverless presign flow:
+- Set `ADMIN_TOKEN`, `S3_BUCKET_NAME`, `AWS_REGION`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` in your Vercel project env.
+- Deploy. Use `/admin` page to upload `notices.json` and `notices_temp.json` using the admin token.
+
+Remember to configure S3 CORS to allow `PUT` from your admin UI origin and `GET` for public reads.
