@@ -192,7 +192,6 @@ export default function Home() {
 
       <footer>
         <span>앤딩스터디카페 상도점</span>
-        <span className="slogan">QUIET SPACE, BETTER FOCUS</span>
         <span>{time}</span>
       </footer>
     </main>
