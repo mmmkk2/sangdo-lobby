@@ -46,6 +46,7 @@ export default function Home() {
   const [allowTemporary, setAllowTemporary] = useState<boolean>(true);
   const [noticesUrl, setNoticesUrl] = useState<string>("/images/notices.json");
   const [noticesTempUrl, setNoticesTempUrl] = useState<string>("/images/notices_temp.json");
+  const [slidesLoaded, setSlidesLoaded] = useState(false);
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -117,7 +118,10 @@ export default function Home() {
         if (slidesToShow.length > 0) {
           console.log('[Notices] Loaded slides:', slidesToShow.length, 'allowPerm:', allowPermanent, 'allowTemp:', allowTemporary);
           setSlides(slidesToShow);
-          setIndex(0);
+          if (!slidesLoaded) {
+            setIndex(0);
+            setSlidesLoaded(true);
+          }
         } else {
           console.log('[Notices] No slides loaded. tempData:', tempData.length, 'permData:', permData.length);
         }
@@ -130,7 +134,7 @@ export default function Home() {
     const reloadTimer = setInterval(loadNotices, 5000);
 
     return () => clearInterval(reloadTimer);
-  }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl]);
+  }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl, slidesLoaded]);
 
   useEffect(() => {
     const clock = () => {
