@@ -167,6 +167,9 @@ html,
 body {
   margin: 0;
   padding: 0;
+}
+
+body:has(.screen) {
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -220,7 +223,7 @@ body {
   flex-direction: column;
 }
 
-h1 {
+.screen h1 {
   margin: clamp(20px, 3.4vh, 40px) 0 clamp(5px, 0.8vh, 12px);
   text-align: center;
   font-size: clamp(48px, 5.8vw, 85px);
@@ -230,7 +233,7 @@ h1 {
   letter-spacing: -0.06em;
 }
 
-h2 {
+.screen h2 {
   margin: 0 0 clamp(15px, 2.4vh, 30px);
   text-align: center;
   font-size: clamp(26px, 3.5vw, 50px);
@@ -304,7 +307,7 @@ h2 {
   pointer-events: none;
 }
 
-footer {
+.screen footer {
   width: clamp(85vw, 92vw, 95vw);
   margin-top: clamp(12px, 2.2vh, 28px);
   display: flex;
@@ -325,7 +328,7 @@ footer {
   white-space: pre-line;
 }
 
-b {
+.screen b {
   font-weight: 950;
 }
 
