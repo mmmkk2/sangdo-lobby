@@ -195,7 +195,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: clamp(6px, 0.8vw, 15px);
-  color: #a6782f;
+  color: #8a6215;
   font-size: clamp(22px, 3.5vw, 45px);
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -330,6 +330,6 @@ b {
 }
 
 b.gold {
-  color: #c99e3a;
+  color: #a05d0a;
   font-weight: 950;
 }
