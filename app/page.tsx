@@ -9,6 +9,7 @@ type NoticeItem = {
 };
 
 type Slide = {
+  type?: "permanent" | "temporary";
   title: string;
   subtitle: string;
   duration?: number;
@@ -17,6 +18,7 @@ type Slide = {
 
 const defaultSlides: Slide[] = [
   {
+    type: "permanent",
     title: "카페테리아 이용 안내",
     subtitle: "대화 및 통화는 밖에서 부탁드립니다.",
     duration: 10000,
@@ -40,16 +42,63 @@ export default function Home() {
   const [slides, setSlides] = useState<Slide[]>(defaultSlides);
   const [index, setIndex] = useState(0);
   const [time, setTime] = useState("");
+  const [allowPermanent, setAllowPermanent] = useState<boolean>(true);
+  const [allowTemporary, setAllowTemporary] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        const res = await fetch(`/images/config.json?t=${Date.now()}`);
+        if (!res.ok) return;
+        
+        const config = await res.json();
+        setAllowPermanent(config.allowPermanent ?? true);
+        setAllowTemporary(config.allowTemporary ?? true);
+      } catch {
+        setAllowPermanent(true);
+        setAllowTemporary(true);
+      }
+    };
+
+    loadConfig();
+  }, []);
 
   useEffect(() => {
     const loadNotices = async () => {
       try {
-        const res = await fetch(`/images/notices.json?t=${Date.now()}`);
-        if (!res.ok) return;
+        let slidesToShow: Slide[] = [];
 
-        const data: Slide[] = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setSlides(data);
+        // allowTemporary가 true이면 notices_temp.json 먼저 로드
+        if (allowTemporary) {
+          try {
+            const tempRes = await fetch(`/images/notices_temp.json?t=${Date.now()}`);
+            if (tempRes.ok) {
+              const tempData: Slide[] = await tempRes.json();
+              if (Array.isArray(tempData) && tempData.length > 0) {
+                slidesToShow = tempData;
+              }
+            }
+          } catch {
+            // temp 파일이 없으면 무시
+          }
+        }
+
+        // temp 공지가 없거나 allowTemporary가 false일 때 permanent 공지 로드
+        if (slidesToShow.length === 0 && allowPermanent) {
+          const res = await fetch(`/images/notices.json?t=${Date.now()}`);
+          if (!res.ok) return;
+
+          const data: Slide[] = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            slidesToShow = data.filter((slide) => slide.type === "permanent");
+            if (slidesToShow.length === 0) {
+              slidesToShow = data;
+            }
+          }
+        }
+
+        if (slidesToShow.length > 0) {
+          setSlides(slidesToShow);
           setIndex(0);
         }
       } catch {
@@ -61,7 +110,7 @@ export default function Home() {
     const reloadTimer = setInterval(loadNotices, 60000);
 
     return () => clearInterval(reloadTimer);
-  }, []);
+  }, [allowPermanent, allowTemporary]);
 
   useEffect(() => {
     const clock = () => {
