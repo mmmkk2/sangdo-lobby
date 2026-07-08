@@ -115,11 +115,14 @@ export default function Home() {
         }
 
         if (slidesToShow.length > 0) {
+          console.log('[Notices] Loaded slides:', slidesToShow.length, 'allowPerm:', allowPermanent, 'allowTemp:', allowTemporary);
           setSlides(slidesToShow);
           setIndex(0);
+        } else {
+          console.log('[Notices] No slides loaded. tempData:', tempData.length, 'permData:', permData.length);
         }
-      } catch {
-        // JSON 못 읽어도 기본 화면 유지
+      } catch (err) {
+        console.error('[Notices] Load error:', err);
       }
     };
 
