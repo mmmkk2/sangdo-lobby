@@ -65,6 +65,8 @@ export default function Home() {
     };
 
     loadConfig();
+    const configTimer = setInterval(loadConfig, 60000);
+    return () => clearInterval(configTimer);
   }, []);
 
   useEffect(() => {
