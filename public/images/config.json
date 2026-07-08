@@ -1,4 +1,4 @@
 {
-  "allowPermanent": true,
+  "allowPermanent": false,
   "allowTemporary": true
 }
