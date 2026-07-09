@@ -46,7 +46,6 @@ const buttonStyle: React.CSSProperties = {
 
 export default function AdminPage() {
   const [token, setToken] = useState("");
-  const [violatingStudents, setViolatingStudents] = useState("");
   const [allowPermanent, setAllowPermanent] = useState(true);
   const [allowTemporary, setAllowTemporary] = useState(true);
   const [settingsMessage, setSettingsMessage] = useState("");
@@ -55,7 +54,6 @@ export default function AdminPage() {
     fetch(`/api/config?t=${Date.now()}`)
       .then((res) => res.json())
       .then((config) => {
-        setViolatingStudents(config.violatingStudents ?? "");
         setAllowPermanent(config.allowPermanent ?? true);
         setAllowTemporary(config.allowTemporary ?? true);
       })
@@ -71,7 +69,7 @@ export default function AdminPage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token.trim()}`,
         },
-        body: JSON.stringify({ violatingStudents, allowPermanent, allowTemporary }),
+        body: JSON.stringify({ allowPermanent, allowTemporary }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -107,17 +105,6 @@ export default function AdminPage() {
           onChange={(e) => setToken(e.target.value)}
           type="password"
           placeholder="ADMIN_TOKEN"
-          style={inputStyle}
-        />
-      </div>
-
-      <div style={{ marginTop: 20 }}>
-        <label style={labelStyle}>규칙 위반 학생 명단</label>
-        <p style={hintStyle}>임시 경고 슬라이드 부제목에 표시됩니다.</p>
-        <input
-          value={violatingStudents}
-          onChange={(e) => setViolatingStudents(e.target.value)}
-          placeholder="학생1, 학생2, 학생3"
           style={inputStyle}
         />
       </div>

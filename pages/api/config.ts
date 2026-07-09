@@ -7,7 +7,6 @@ type Config = {
   allowTemporary: boolean
   noticesUrl: string
   noticesTempUrl: string
-  violatingStudents: string
 }
 
 const CONFIG_PATH = path.join(process.cwd(), 'public', 'images', 'config.json')
