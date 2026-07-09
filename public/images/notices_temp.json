@@ -6,6 +6,21 @@
     "duration": 10000,
     "items": [
       {
+        "icon": "🙋",
+        "text": "학생1",
+        "highlight": "학생1"
+      },
+      {
+        "icon": "🙋",
+        "text": "학생2",
+        "highlight": "학생2"
+      },
+      {
+        "icon": "🙋",
+        "text": "학생3",
+        "highlight": "학생3"
+      },
+      {
         "icon": "🔇",
         "text": "카페테리아에서 큰 소리로 대화하는 행위는 금지되어 있습니다.",
         "highlight": "금지"
