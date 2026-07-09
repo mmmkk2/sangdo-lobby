@@ -61,6 +61,7 @@ export default function Home() {
   const [noticesTempUrl, setNoticesTempUrl] = useState<string>("/images/notices_temp.json");
   const [slidesLoaded, setSlidesLoaded] = useState(false);
   const [violatingStudents, setViolatingStudents] = useState<string>("");
+  const [configLoaded, setConfigLoaded] = useState(false);
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -77,6 +78,8 @@ export default function Home() {
       } catch {
         setAllowPermanent(true);
         setAllowTemporary(true);
+      } finally {
+        setConfigLoaded(true);
       }
     };
 
@@ -86,6 +89,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (!configLoaded) return;
+
     const loadNotices = async () => {
       try {
         let tempData: Slide[] = [];
@@ -152,7 +157,7 @@ export default function Home() {
     const reloadTimer = setInterval(loadNotices, 5000);
 
     return () => clearInterval(reloadTimer);
-  }, [allowPermanent, allowTemporary, noticesUrl, noticesTempUrl, slides, slidesLoaded]);
+  }, [configLoaded, allowPermanent, allowTemporary, noticesUrl, noticesTempUrl, slides, slidesLoaded]);
 
   useEffect(() => {
     const clock = () => {
