@@ -6,17 +6,17 @@
     "duration": 10000,
     "items": [
       {
-        "icon": "🙋",
+        "icon": "⚠️",
         "text": "학생1",
         "highlight": "학생1"
       },
       {
-        "icon": "🙋",
+        "icon": "⚠️",
         "text": "학생2",
         "highlight": "학생2"
       },
       {
-        "icon": "🙋",
+        "icon": "⚠️",
         "text": "학생3",
         "highlight": "학생3"
       }
