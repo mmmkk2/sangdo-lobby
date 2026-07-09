@@ -12,9 +12,22 @@ type Slide = {
   type?: "permanent" | "temporary";
   title: string;
   subtitle: string;
+  subtitleHighlight?: string;
   duration?: number;
   items: NoticeItem[];
 };
+
+function renderWithHighlight(text: string, highlight?: string) {
+  if (!highlight || !text.includes(highlight)) return text;
+  const [before, after] = text.split(highlight);
+  return (
+    <>
+      {before}
+      <b className="gold">{highlight}</b>
+      {after}
+    </>
+  );
+}
 
 const defaultSlides: Slide[] = [
   {
@@ -181,7 +194,7 @@ export default function Home() {
         <div className="brand">ANDING STUDY CAFE</div>
 
         <h1>{slide.title}</h1>
-        <h2>{subtitle}</h2>
+        <h2>{renderWithHighlight(subtitle, slide.subtitleHighlight)}</h2>
 
         <div className="divider">
           <span />
@@ -205,29 +218,11 @@ export default function Home() {
 }
 
 function Notice({ item }: { item: NoticeItem }) {
-  if (!item.highlight || !item.text.includes(item.highlight)) {
-    return (
-      <div className="row">
-        <div className="icon">{item.icon}</div>
-        <div className="bar" />
-        <div>{item.text}</div>
-      </div>
-    );
-  }
-
-  const parts = item.text.split(item.highlight);
-
   return (
     <div className="row">
       <div className="icon">{item.icon}</div>
       <div className="bar" />
-      <div>
-        {parts[0]}
-        <b className={item.highlight.includes("제한") ? "gold" : ""}>
-          {item.highlight}
-        </b>
-        {parts[1]}
-      </div>
+      <div>{renderWithHighlight(item.text, item.highlight)}</div>
     </div>
   );
 }

@@ -198,7 +198,7 @@ body:has(.screen) {
   justify-content: center;
   align-items: center;
   gap: clamp(6px, 0.8vw, 15px);
-  color: #8a6215;
+  color: #edc27a;
   font-size: clamp(22px, 3.5vw, 45px);
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -211,10 +211,11 @@ body:has(.screen) {
   position: relative;
   width: clamp(85vw, 92vw, 95vw);
   height: clamp(70vh, 82vh, 90vh);
-  background: #fffaf0;
+  background: #0e211b;
+  color: #f3ead9;
   border-radius: clamp(20px, 3.4vw, 40px);
   border: clamp(2px, 0.4vw, 5px) solid #b38a42;
-  box-shadow: inset 0 0 0 clamp(2px, 0.3vw, 4px) #123b2f, 0 clamp(12px, 2.4vw, 30px) clamp(30px, 6vw, 60px) rgba(0, 0, 0, 0.32);
+  box-shadow: inset 0 0 0 clamp(2px, 0.3vw, 4px) rgba(255, 255, 255, 0.06), 0 clamp(12px, 2.4vw, 30px) clamp(30px, 6vw, 60px) rgba(0, 0, 0, 0.45);
   padding: clamp(20px, 3.4vw, 45px) clamp(40px, 8vw, 100px) clamp(20px, 3.6vh, 45px);
   box-sizing: border-box;
   overflow: hidden;
@@ -224,12 +225,12 @@ body:has(.screen) {
 }
 
 .screen h1 {
-  margin: clamp(20px, 3.4vh, 40px) 0 clamp(5px, 0.8vh, 12px);
+  margin: clamp(2px, 0.6vh, 8px) 0 clamp(5px, 0.8vh, 12px);
   text-align: center;
   font-size: clamp(48px, 5.8vw, 85px);
   line-height: 1.05;
   font-weight: 950;
-  color: #063426;
+  color: #fbf6ee;
   letter-spacing: -0.06em;
 }
 
@@ -239,7 +240,7 @@ body:has(.screen) {
   font-size: clamp(26px, 3.5vw, 50px);
   line-height: 1.16;
   font-weight: 900;
-  color: #063426;
+  color: #fbf6ee;
   letter-spacing: -0.055em;
 }
 
@@ -250,7 +251,7 @@ body:has(.screen) {
   margin: 0 auto clamp(15px, 2.4vh, 30px);
   width: 74%;
   height: clamp(0.5px, 0.1vw, 2px);
-  background: #b58a43;
+  background: #d1a662;
   flex-shrink: 0;
 }
 
@@ -270,7 +271,7 @@ body:has(.screen) {
   align-items: center;
   gap: clamp(15px, 2.2vw, 30px);
   padding: clamp(12px, 1.8vh, 22px) 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   font-size: clamp(22px, 2.8vw, 42px);
   font-weight: 800;
   letter-spacing: -0.045em;
@@ -281,8 +282,8 @@ body:has(.screen) {
   width: clamp(60px, 7.6vw, 95px);
   height: clamp(60px, 7.6vw, 95px);
   border-radius: 50%;
-  background: #063426;
-  color: white;
+  background: #edc27a;
+  color: #0e211b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,7 +293,7 @@ body:has(.screen) {
 .bar {
   width: clamp(1px, 0.2vw, 3px);
   height: clamp(32px, 4.2vh, 52px);
-  background: #b58a43;
+  background: #d1a662;
 }
 
 
@@ -302,7 +303,7 @@ body:has(.screen) {
   bottom: clamp(60px, 12vh, 160px);
   width: clamp(120px, 17vw, 210px);
   height: clamp(120px, 17vw, 210px);
-  border: clamp(12px, 2.2vw, 28px) solid rgba(166, 125, 57, 0.06);
+  border: clamp(12px, 2.2vw, 28px) solid rgba(230, 182, 97, 0.08);
   transform: rotate(45deg);
   pointer-events: none;
 }
@@ -333,6 +334,6 @@ body:has(.screen) {
 }
 
 b.gold {
-  color: #a05d0a;
+  color: #ffb454;
   font-weight: 950;
 }
